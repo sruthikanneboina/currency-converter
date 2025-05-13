@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        .container {
+            width: 300px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Currency Converter</h1>
+        <form method="POST">
+            <input type="number" name="amount" step="0.01" value="{{ amount }}" placeholder="Amount" required>
+            <select name="from_currency">
+                <option value="USD" {% if from_currency == "USD" %}selected{% endif %}>USD</option>
+                <option value="EUR" {% if from_currency == "EUR" %}selected{% endif %}>EUR</option>
+                <option value="GBP" {% if from_currency == "GBP" %}selected{% endif %}>GBP</option>
+                <option value="INR" {% if from_currency == "INR" %}selected{% endif %}>INR</option>
+            </select>
+            <select name="to_currency">
+                <option value="EUR" {% if to_currency == "EUR" %}selected{% endif %}>EUR</option>
+                <option value="USD" {% if to_currency == "USD" %}selected{% endif %}>USD</option>
+                <option value="GBP" {% if to_currency == "GBP" %}selected{% endif %}>GBP</option>
+                <option value="INR" {% if to_currency == "INR" %}selected{% endif %}>INR</option>
+            </select>
+            <button type="submit">Convert</button>
+        </form>
+
+        {% if error_message %}
+        <div class="error">
+            <p>{{ error_message }}</p>
+        </div>
+        {% endif %}
+
+        {% if converted_amount %}
+        <div class="result">
+            <h3>Converted Amount:</h3>
+            <p>{{ amount }} {{ from_currency }} = {{ converted_amount }} {{ to_currency }}</p>
+            <p>Exchange Rate: 1 {{ from_currency }} = {{ exchange_rate }} {{ to_currency }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
+
